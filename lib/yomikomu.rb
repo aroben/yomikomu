@@ -86,6 +86,12 @@ module Yomikomu
       rescue SyntaxError, RuntimeError => e
         puts "#{e}: #{fname}"
         nil
+      # Work around https://github.com/ruby/ruby/commit/a38b2f84f
+      ensure
+        begin
+          raise StandardError
+        rescue
+        end
       end
     end
 
