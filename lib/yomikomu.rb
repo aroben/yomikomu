@@ -77,6 +77,7 @@ module Yomikomu
 
     def compile_and_store_iseq fname, iseq_key = iseq_key_name(fname = File.expand_path(fname))
       ::Yomikomu.debug{ "compile #{fname} into #{iseq_key}" }
+      return if compiled_iseq_exist?(fname, iseq_key) && compiled_iseq_is_younger?(fname, iseq_key)
       begin
         iseq = RubyVM::InstructionSequence.compile_file(fname)
         binary = iseq.to_binary(extra_data(fname))
